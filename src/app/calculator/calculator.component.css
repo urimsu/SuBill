@@ -52,7 +52,7 @@ input, select {
 button {
     width: 100%;
     padding: 12px;
-    background-color: #28a745;
+    background-color: #2e31b1;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -62,5 +62,5 @@ button {
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #322e70;
 }
