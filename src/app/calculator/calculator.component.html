@@ -1,25 +1,28 @@
 <div class="calculator">
     <div class="form-container">
         <h2>Kontaktformular</h2>
-        <form action="/submit" method="POST">
+        <form (submit)="generatePDF()">
             <label for="vorname">Vorname:</label>
-            <input type="text" id="vorname" name="vorname" placeholder="Vorname" required>
+            <input type="text" id="vorname" [(ngModel)]="vorname" name="vorname" placeholder="Vorname" required>
 
             <label for="nachname">Nachname:</label>
-            <input type="text" id="nachname" name="nachname" placeholder="Nachname" required>
+            <input type="text" id="nachname" [(ngModel)]="nachname" name="nachname" placeholder="Nachname" required>
 
-            <label for="adresse">Adresse:</label>
-            <input type="text" id="adresse" name="adresse" placeholder="Adresse" required>
+            <label for="strasse">Straße:</label>
+            <input type="text" id="strasse" [(ngModel)]="strasse" name="strasse" placeholder="MusterStraße 7" required>
+
+            <label for="plzUndOrt">Postleitzahl und Ort:</label>
+            <input type="text" id="plzUndOrt" [(ngModel)]="plzUndOrt" name="plzUndOrt" placeholder="12345 Musterort" required>
 
             <label for="options">Rechnungsgrund</label>
-            <select id="options" name="options" required>
+            <select id="options" [(ngModel)]="rechnungsgrund" name="options" required>
                 <option value="">Bitte wählen...</option>
-                <option value="option1">Wordpress</option>
-                <option value="option2">Programmiert</option>
-                <option value="option3">Beratung und Google präsenz</option>
+                <option value="Wordpress">Wordpress</option>
+                <option value="Programmiert">Programmiert</option>
+                <option value="Beratung">Beratung und Google präsenz</option>
             </select>
 
-            <button type="submit">Absenden</button>
+            <button type="submit"  >Absenden</button>
         </form>
     </div>
 </div>
