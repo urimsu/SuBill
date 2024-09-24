@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable'
+import autoTable, { Cell } from 'jspdf-autotable'
 
 
 @Component({
@@ -17,8 +17,14 @@ export class CalculatorComponent {
   nachname = '';
   strasse = '';
   plzUndOrt = '';
-  rechnungsgrund = '';
   preis = 0;
+  
+  rechnungsgrund:any[] = [];
+  wordpressGrund=false;
+  programmierGrund=false;
+  beratungGrund=false;
+
+
 
   currentDate: Date = new Date();
 
@@ -33,6 +39,21 @@ export class CalculatorComponent {
     return this.preis;
   }
 
+  getRechnungsGrund(wordpress:Boolean,programmiert:Boolean,beratung:Boolean){
+    if(wordpress){
+      this.rechnungsgrund.push(['Erstellung einer Internetseite mit Wordpress',`${700}€`]);
+      this.preis+=700;
+    }
+    if(programmiert){
+      this.rechnungsgrund.push(['Erstellung einer Webseite programmiert',`${1200}€`]);
+      this.preis+=1200;
+    }
+    if(beratung){
+      this.rechnungsgrund.push(['Beratung zur Onlinepräsenz und/oder Webseite',`${150}€`]);
+      this.preis+=150;
+    }
+    return this.rechnungsgrund;
+  }
 
   formatDate(date: Date): string {
     const day = ('0' + date.getDate()).slice(-2); // Tag
@@ -126,19 +147,37 @@ export class CalculatorComponent {
       },
       theme:'grid',
     })
-
     autoTable(doc,{
       head:[['Bezeichnung','Preis']],
-      body:[
-        [`${this.rechnungsgrund}`,`${this.getRechnungsPreis(this.rechnungsgrund)}€`]
-        ],
+      body:
+        this.getRechnungsGrund(this.wordpressGrund,this.programmierGrund,this.beratungGrund)
+        ,
         headStyles:{
           fillColor:[170,170,170],
           textColor:[0,0,0],
         }
     })
 
+    autoTable(doc,{
+      head:[['Ihre Gesamtsumme beträgt',`${this.preis}€`]],
+        headStyles:{
+          fillColor:[170,170,170],
+          textColor:[0,0,0],
+        },
+    })
+
+    autoTable(doc,{
+      head:[['Hinweis: Als Kleinunternehmer im Sinne von § 19 Abs. 1 UStG wird Umsatzsteuer nicht berechnet']],
+        headStyles:{
+          fillColor:[255,255,255],
+          textColor:[0,0,0],
+          fontSize:10,
+          fontStyle:'italic',
+        },
+    })
+
     doc.save('rechnung.pdf');
+    window.location.reload();
 
   }
 }

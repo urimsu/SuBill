@@ -1,7 +1,7 @@
 .calculator{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; 
+    align-items: center; 
 
 }
 
@@ -63,4 +63,21 @@ button {
 
 button:hover {
     background-color: #322e70;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center; 
+    padding-bottom: 1pc;
+}
+
+
+.checkbox-label input[type="checkbox"] {
+    margin: 0;                  /* Kein Abstand zwischen Checkbox und Text */
+    width: auto;                /* Checkbox nicht strecken */
+    height: auto;               /* Checkbox nicht strecken */
+}
+
+.checkbox-label span {
+    margin-left: 10px;           /* Abstand zwischen Checkbox und Text */
 }
