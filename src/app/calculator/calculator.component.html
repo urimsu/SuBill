@@ -1,19 +1,20 @@
 <div class="calculator">
     <div class="form-container">
         <h2>Rechnung erstellen</h2>
-        <form (submit)="generatePDF()">
-            <label for="vorname">Vorname:</label>
-            <input type="text" id="vorname" [(ngModel)]="vorname" name="vorname" placeholder="Vorname" required>
+        <form  class="formContainer">
+            <div class="leftDiv">
+                <label for="vorname">Vorname:</label>
+                <input type="text" id="vorname" [(ngModel)]="vorname" name="vorname" placeholder="Vorname" required>
 
-            <label for="nachname">Nachname:</label>
-            <input type="text" id="nachname" [(ngModel)]="nachname" name="nachname" placeholder="Nachname" required>
+                <label for="nachname">Nachname:</label>
+                <input type="text" id="nachname" [(ngModel)]="nachname" name="nachname" placeholder="Nachname" required>
 
-            <label for="strasse">Straße:</label>
-            <input type="text" id="strasse" [(ngModel)]="strasse" name="strasse" placeholder="MusterStraße 7" required>
+                <label for="strasse">Straße:</label>
+                <input type="text" id="strasse" [(ngModel)]="strasse" name="strasse" placeholder="MusterStraße 7" required>
 
-            <label for="plzUndOrt">Postleitzahl und Ort:</label>
-            <input type="text" id="plzUndOrt" [(ngModel)]="plzUndOrt" name="plzUndOrt" placeholder="12345 Musterort" required>
-
+                <label for="plzUndOrt">Postleitzahl und Ort:</label>
+                <input type="text" id="plzUndOrt" [(ngModel)]="plzUndOrt" name="plzUndOrt" placeholder="12345 Musterort" required>
+            </div>
             <!-- <label for="options">Rechnungsgrund</label>
             <select id="options" [(ngModel)]="rechnungsgrund" name="options" required>
                 <option value="">Bitte wählen...</option>
@@ -21,23 +22,38 @@
                 <option value="Programmiert">Programmiert</option>
                 <option value="Beratung">Beratung und Google präsenz</option>
             </select> -->
+            <div class="rightDiv">
+                <div class="checkbox-label">
+                    <input type="checkbox" [(ngModel)]="wordpressGrund" name="my_checkbox" value="Wordpress">
+                    <span>Wordpress Seite erstellen</span>
+                </div>
 
-            <div class="checkbox-label">
-                <input type="checkbox" [(ngModel)]="wordpressGrund" name="my_checkbox" value="Wordpress">
-                <span>Wordpress Seite erstellen</span>
+                <div class="checkbox-label">
+                    <input type="checkbox" [(ngModel)]="programmierGrund" name="my_checkbox" value="Programmiert">
+                    <span>Seite programmieren</span>
+                </div>
+
+                <div class="checkbox-label">
+                    <input type="checkbox" [(ngModel)]="beratungGrund" name="my_checkbox" value="Beratung">
+                    <span>Beratung der Onlinepräsenz</span>
+                </div>
+
+                <div class="writer-label">
+                    <!-- Input-Feld -->
+                    <input [(ngModel)]="newItem" [ngModelOptions]="{standalone: true}" placeholder="Rechnungsgrund" />
+                    <input [(ngModel)]="newPreis" [ngModelOptions]="{standalone: true}" placeholder="Rechnungspreis" />
+
+                    <!-- Button zum Hinzufügen der Eingabe -->
+                    <button id='addButton' (click)="addItem()">Hinzufügen</button>
+                </div>
+                
+                <!-- Liste, um die hinzugefügten Elemente anzuzeigen -->
+                <ul>
+                    <li *ngFor="let item of rechnungsgrund">{{ item }}</li>
+                </ul>
+
+                <button id='druckenButton' type="submit" (click)="generatePDF()" >Absenden</button>
             </div>
-
-            <div class="checkbox-label">
-                <input type="checkbox" [(ngModel)]="programmierGrund" name="my_checkbox" value="Programmiert">
-                <span>Seite programmieren</span>
-            </div>
-
-            <div class="checkbox-label">
-                <input type="checkbox" [(ngModel)]="beratungGrund" name="my_checkbox" value="Beratung">
-                <span>Beratung der Onlinepräsenz</span>
-            </div>
-
-            <button type="submit"  >Absenden</button>
         </form>
     </div>
 </div>

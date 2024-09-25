@@ -1,3 +1,4 @@
+import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
@@ -7,7 +8,7 @@ import autoTable, { Cell } from 'jspdf-autotable'
 @Component({
   selector: 'app-calculator',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgFor],
   templateUrl: './calculator.component.html',
   styleUrl: './calculator.component.css'
 })
@@ -18,15 +19,24 @@ export class CalculatorComponent {
   strasse = '';
   plzUndOrt = '';
   preis = 0;
+  newPreis:number | undefined;
+
+  newItem: string = '';
   
   rechnungsgrund:any[] = [];
   wordpressGrund=false;
   programmierGrund=false;
   beratungGrund=false;
 
-
-
   currentDate: Date = new Date();
+
+  addItem() {
+    if (this.newItem) {
+      this.rechnungsgrund.push([this.newItem]);
+      this.newItem = ''; // Eingabefeld leeren
+      console.log(this.rechnungsgrund);
+    }
+  }
 
   getRechnungsPreis(rechnungsgrund: string){
     if(rechnungsgrund=='Wordpress'){
