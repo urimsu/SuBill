@@ -186,6 +186,12 @@ export class CalculatorComponent {
         },
     })
 
+    autoTable(doc,{
+      head:[['Bitte überweisen Sie die oben genannte Summe zum nächstnöglichen Zeitpunkt an Folgende Adresse:']],
+      body:[['Kontoinhaber: Urim Sulejmani'],['Iban: DE62 5087 0393 0070 8008 00'],['BIC: DEUTDEFFXXX'],[' '],['Mit freundlichen Grüßen'],[''],['Urim Sulejmani']],
+      theme:'plain',
+    })
+
     doc.save('rechnung.pdf');
     window.location.reload();
 
