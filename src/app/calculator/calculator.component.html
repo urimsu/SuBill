@@ -48,9 +48,10 @@
                 </div>
                 
                 <!-- Liste, um die hinzugefügten Elemente anzuzeigen -->
-                <ul>
-                    <li *ngFor="let item of rechnungsgrund">{{ item }}</li>
-                </ul>
+                <div *ngFor="let item of rechnungsgrund" class="list-item-container">
+                    <li class="item-0" >{{ item[0] }}</li>
+                    <li class="item-1">{{ item[1] }}</li>
+                  </div>
 
                 <button id='druckenButton' type="submit" (click)="generatePDF()" >Absenden</button>
             </div>

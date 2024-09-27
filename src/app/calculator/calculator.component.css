@@ -102,3 +102,24 @@ button:hover {
 .checkbox-label span {
     margin-left: 10px;           /* Abstand zwischen Checkbox und Text */
 }
+
+.list-item-container {  /*LISTEN NEBENEINANDER*/
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;/* Abstand zwischen den Elementen, optional */
+  }
+  
+  .item-0 {
+    flex: 1 1 auto; /* Item 0 kann wachsen und schrumpfen */
+    min-width: 0;   /* Damit das Wrapping funktioniert */
+    max-width: 70%;
+    flex-wrap: wrap;
+  }
+  
+  .item-1 {
+    list-style-type:none;
+    white-space: nowrap; /* Item 1 wird nicht umbrechen */
+    margin-left: 10px;   /* Optionaler Abstand zwischen den Elementen */
+  }

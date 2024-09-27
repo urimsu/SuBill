@@ -18,36 +18,42 @@ export class CalculatorComponent {
   nachname = '';
   strasse = '';
   plzUndOrt = '';
-  preis = 0;
-  newPreis:number | undefined;
+  preis:number = 0;
 
+  newPreis:number | undefined;
   newItem: string = '';
   
   rechnungsgrund:any[] = [];
+  rechnungspreis:any[]=[];
   wordpressGrund=false;
   programmierGrund=false;
   beratungGrund=false;
+
+  grundUndPreisMapList:any[]=[];
 
   currentDate: Date = new Date();
 
   addItem() {
     if (this.newItem) {
-      this.rechnungsgrund.push([this.newItem]);
+      this.rechnungsgrund.push([this.newItem,this.newPreis]);
+      if(this.newPreis!=undefined){
+        this.preis+=this.newPreis;
+      }
       this.newItem = ''; // Eingabefeld leeren
-      console.log(this.rechnungsgrund);
+      this.newPreis=undefined;
     }
   }
 
-  getRechnungsPreis(rechnungsgrund: string){
-    if(rechnungsgrund=='Wordpress'){
-      this.preis=700;
-    }else if(rechnungsgrund=='Programmiert'){
-      this.preis=1200;
-    }else{
-      this.preis=150;
-    }
-    return this.preis;
-  }
+  // getRechnungsPreis(rechnungsgrund: string){
+  //   if(rechnungsgrund=='Wordpress'){
+  //     this.preis=700;
+  //   }else if(rechnungsgrund=='Programmiert'){
+  //     this.preis=1200;
+  //   }else{
+  //     this.preis=150;
+  //   }
+  //   return this.preis;
+  // }
 
   getRechnungsGrund(wordpress:Boolean,programmiert:Boolean,beratung:Boolean){
     if(wordpress){
@@ -125,7 +131,7 @@ export class CalculatorComponent {
       body: [
         [`Internet: su-tech.org`], 
         [`Email: urim.sulejmani@su-tech.org`], 
-        [`Telefon: 015759229559`],
+        [`Telefon: 0170 9059629`],
         [`Steuernummer:`],
         [`Steuernummer folgt!`],
         [``],
