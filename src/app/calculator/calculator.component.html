@@ -3,6 +3,9 @@
         <h2>Rechnung erstellen</h2>
         <form  class="formContainer">
             <div class="leftDiv">
+                <label for="firma">Firma:</label>
+                <input type="text" id="firma" [(ngModel)]="firma" name="firma" placeholder="Firmenname" required>
+
                 <label for="vorname">Vorname:</label>
                 <input type="text" id="vorname" [(ngModel)]="vorname" name="vorname" placeholder="Vorname" required>
 
@@ -14,6 +17,9 @@
 
                 <label for="plzUndOrt">Postleitzahl und Ort:</label>
                 <input type="text" id="plzUndOrt" [(ngModel)]="plzUndOrt" name="plzUndOrt" placeholder="12345 Musterort" required>
+
+                <label for="rechnungsnummer">Rechnungsnummer:</label>
+                <input type="text" id="rechnungsnummer" [(ngModel)]="rechnungsnummer" name="rechnungsnummer" placeholder="2410-0001" required>
             </div>
             <!-- <label for="options">Rechnungsgrund</label>
             <select id="options" [(ngModel)]="rechnungsgrund" name="options" required>
@@ -41,7 +47,7 @@
                 <div class="writer-label">
                     <!-- Input-Feld -->
                     <input [(ngModel)]="newItem" [ngModelOptions]="{standalone: true}" placeholder="Rechnungsgrund" />
-                    <input [(ngModel)]="newPreis" [ngModelOptions]="{standalone: true}" placeholder="Rechnungspreis" />
+                    <input [(ngModel)]="newPreis" [ngModelOptions]="{standalone: true}" type="number" placeholder="Rechnungspreis" />
 
                     <!-- Button zum Hinzufügen der Eingabe -->
                     <button id='addButton' (click)="addItem()">Hinzufügen</button>

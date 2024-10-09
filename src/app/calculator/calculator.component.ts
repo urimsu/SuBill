@@ -18,6 +18,7 @@ export class CalculatorComponent {
   nachname = '';
   strasse = '';
   plzUndOrt = '';
+  firma='';
   preis:number = 0;
 
   newPreis:number | undefined;
@@ -32,12 +33,14 @@ export class CalculatorComponent {
   grundUndPreisMapList:any[]=[];
 
   currentDate: Date = new Date();
+  rechnungsnummer: string=``;
 
   addItem() {
     if (this.newItem) {
-      this.rechnungsgrund.push([this.newItem,this.newPreis]);
+      this.rechnungsgrund.push([this.newItem,`${this.newPreis}€`]);
       if(this.newPreis!=undefined){
         this.preis+=this.newPreis;
+
       }
       this.newItem = ''; // Eingabefeld leeren
       this.newPreis=undefined;
@@ -110,9 +113,11 @@ export class CalculatorComponent {
       
       head: [[`Rechnungsträger`]],
       body: [
+        [`${this.firma}`],
         [`${this.vorname}`], 
         [`${this.nachname}`], 
         [`${this.strasse}`],
+        [`${this.plzUndOrt}`],
         // ...theme="plain",
       ],
       headStyles: {
@@ -145,7 +150,7 @@ export class CalculatorComponent {
     })
 
     autoTable(doc,{
-      head:[['Rechnungsnummer']],
+      head:[[`Rechnungsnummer: ${this.rechnungsnummer}`]],
       styles:{fontStyle: 'bold',
         halign:'center' 
       },
@@ -154,14 +159,18 @@ export class CalculatorComponent {
     
     autoTable(doc,{
       head:[[`für die Erledigung der von Ihnen beauftragen Tätigkeiten berechne ich Ihnen wie folgt`]],
+      body:[[`Rechnungsdatum entspricht Leistungsdatum`]],
     headStyles:{
       fontStyle:'normal',
+    },
+    bodyStyles:{
+      fontStyle:'italic',
     },
       styles:{
         fillColor: [255, 255, 255],
         textColor: [0, 0, 0], // Textfarbe des Headers
       },
-      theme:'grid',
+      theme:'plain',
     })
     autoTable(doc,{
       head:[['Bezeichnung','Preis']],
