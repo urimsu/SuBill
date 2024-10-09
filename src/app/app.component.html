@@ -1,3 +1,11 @@
+
 <app-header></app-header>
-<app-calculator></app-calculator>
-<!-- <app-datenbank-display></app-datenbank-display> -->
+
+<div class="button-container">
+    <a [routerLink]="[routes.paths.calculator]" routerLinkActive="active" class="styled-btn">Bill Schreiben</a>
+    <a [routerLink]="[routes.paths.billreader]" routerLinkActive="active" class="styled-btn">Bill Laden</a>
+</div>
+
+<router-outlet></router-outlet>
+
+    

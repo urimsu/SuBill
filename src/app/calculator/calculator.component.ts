@@ -1,8 +1,9 @@
 import { NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
 import autoTable, { Cell } from 'jspdf-autotable'
+import { FirmenDatenService } from '../services/firmen-daten.service';
 
 
 @Component({
@@ -35,6 +36,8 @@ export class CalculatorComponent {
   currentDate: Date = new Date();
   rechnungsnummer: string=``;
 
+  firmenDaten=inject(FirmenDatenService)
+
   addItem() {
     if (this.newItem) {
       this.rechnungsgrund.push([this.newItem,`${this.newPreis}€`]);
@@ -47,16 +50,6 @@ export class CalculatorComponent {
     }
   }
 
-  // getRechnungsPreis(rechnungsgrund: string){
-  //   if(rechnungsgrund=='Wordpress'){
-  //     this.preis=700;
-  //   }else if(rechnungsgrund=='Programmiert'){
-  //     this.preis=1200;
-  //   }else{
-  //     this.preis=150;
-  //   }
-  //   return this.preis;
-  // }
 
   getRechnungsGrund(wordpress:Boolean,programmiert:Boolean,beratung:Boolean){
     if(wordpress){
@@ -74,13 +67,6 @@ export class CalculatorComponent {
     return this.rechnungsgrund;
   }
 
-  formatDate(date: Date): string {
-    const day = ('0' + date.getDate()).slice(-2); // Tag
-    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Monat (0-indexiert)
-    const year = date.getFullYear(); // Jahr
-
-    return `${day}.${month}.${year}`; // Formatierung: Tag/Monat/Jahr
-  }
 
   generatePDF() {
   const doc = new jsPDF();
@@ -99,7 +85,7 @@ export class CalculatorComponent {
 
     autoTable(doc, {
 
-      head: [[`SuTech | Urim | Sulejmani | Prießnitzstraße 7 | 65203 Wiesbaden`]],
+      head: [this.firmenDaten.getFirmenDaten()],
 
       headStyles: {
         fillColor: [255, 255, 255],  // Hintergrundfarbe des Headers
@@ -133,15 +119,8 @@ export class CalculatorComponent {
     })
 
     autoTable(doc,{
-      body: [
-        [`Internet: su-tech.org`], 
-        [`Email: urim.sulejmani@su-tech.org`], 
-        [`Telefon: 0170 9059629`],
-        [`Steuernummer:`],
-        [`Steuernummer folgt!`],
-        [``],
-        [`Datum: ${this.formatDate(this.currentDate)}`],
-      ],
+      body: 
+        this.firmenDaten.getKontaktDaten(),
       styles:{
         halign:'right',
         cellPadding:0.1,

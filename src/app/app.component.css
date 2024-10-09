@@ -1,0 +1,37 @@
+/* Container für zentrierte Buttons */
+.button-container {
+    display: flex;
+    justify-content: center;  /* Zentriert die Buttons horizontal */
+    gap: 10px;  /* Abstand zwischen den Buttons */
+    padding-bottom: 2%;
+  }
+  
+  /* Stil für die Buttons */
+  .styled-btn {
+    display: inline-block;
+    padding: 5px 40px;  /* Innenabstand der Buttons */
+    font-size: 18px;  /* Textgröße */
+    color: #333;  /* Textfarbe */
+    background-color: white;  /* Hintergrundfarbe */
+    border: 2px solid #007BFF;  /* Rahmenfarbe und -breite */
+    border-radius: 30px;  /* Abgerundete Ecken */
+    text-decoration: none;  /* Entfernt die Unterstreichung */
+    cursor: pointer;  /* Mauszeiger */
+    transition: all 0.3s ease;  /* Weicher Übergang bei Hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Schattierung für den Button */
+  }
+  
+  /* Hover-Effekt für Button */
+  .styled-btn:hover {
+    background-color: #007BFF;  /* Hintergrundfarbe bei Hover */
+    color: white;  /* Textfarbe bei Hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Größerer Schatten bei Hover */
+    transform: translateY(-3px);  /* Leichter Aufschwebeeffekt */
+  }
+  
+  /* Optional: Stil für aktive Links */
+  .styled-btn.active {
+    border-color: #007BFF;  /* Grüner Rand für aktiven Link */
+    box-shadow: 0 6px 12px rgba(0, 128, 0, 0.2);  /* Grüner Schatten bei aktivem Link */
+  }
+  
