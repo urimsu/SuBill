@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './billreader.component.css'
 })
 export class BillreaderComponent {
+   dataBills=['Bill A',' Bill B']
+
 
 }
