@@ -28,6 +28,12 @@ body {
     justify-content: space-between;
     max-width: 100%;
 }
+@media only screen and (max-width: 768px) {
+
+.formContainer{
+    flex-direction: column;
+}
+}
 
 .leftDiv, .rightDiv {
     flex: 1; /* Nimmt den verfügbaren Platz gleichmäßig ein */
