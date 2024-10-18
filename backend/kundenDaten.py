@@ -30,7 +30,7 @@ def fetch_data(connection):
 
     for row in rows:
         row_dict = dict(zip(columns, row))
-        kundenDaten.append([row_dict['Kundennummer'],row_dict['Nachname'],row_dict['Name']])
+        kundenDaten.append([row_dict['Kundennummer'],row_dict['Nachname'],row_dict['Name'],row_dict['Straße'],row_dict['Plz und Wohnort'], row_dict['Dienstleistung']])
 
     print('KundenDaten von allen Kunden: ',kundenDaten)
 

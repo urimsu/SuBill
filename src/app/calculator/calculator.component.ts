@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
 import autoTable, { Cell } from 'jspdf-autotable'
 import { FirmenDatenService } from '../services/firmen-daten.service';
+import { DatenService } from '../services/api-data.service';
 
 
 @Component({
@@ -37,6 +38,8 @@ export class CalculatorComponent {
   rechnungsnummer: string=``;
 
   firmenDaten=inject(FirmenDatenService)
+
+  constructor(private datenService: DatenService) {}
 
   addItem() {
     if (this.newItem) {
@@ -187,7 +190,24 @@ export class CalculatorComponent {
     })
 
     doc.save('rechnung.pdf');
-    window.location.reload();
+    
+    const toSendData = {firma:this.firma,
+      vorname:this.vorname,
+      nachname: this.nachname,
+      strasse: this.strasse,
+      plzUndOrt:this.plzUndOrt,
+      rechnungsnummer: this.rechnungsnummer,
+      rechnungsgrund:this.rechnungsgrund,
+        }
+    this.datenService.sendDaten(toSendData).subscribe(
+      response => {
+        console.log('Antwort von der API:', response);
+      },
+      error => {
+        console.error('Fehler beim Senden der Daten', error);
+      }
+      )
+    //window.location.reload();
 
   }
 }
