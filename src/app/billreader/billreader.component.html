@@ -1,7 +1,12 @@
 <div class="billReader">
      <div class="form-container">
 
-         <p>Hier kommt noch ein Billreader, verbunden mit der Datenbank</p>
+        <h1>Kundendaten:</h1>
+        <ul>
+          @for(kunde of kundenDaten;track kunde){
+            <li>{{ kunde }}</li>
+        }
+        </ul>
      </div>
 </div>
 

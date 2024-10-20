@@ -1,7 +1,10 @@
 from flask import Flask, jsonify, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import mysql.connector
 from mysql.connector import Error
+
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}})  # Erlaube nur Anfragen von Angular
 
 def listInString(liste):
     finalString=''
@@ -41,7 +44,8 @@ def fetch_data(connection):
         row_dict = dict(zip(columns, row))
         kundenDaten.append([row_dict['Kundennummer'],row_dict['Nachname'],row_dict['Name'],row_dict['Straße'],row_dict['Plz und Wohnort'], row_dict['Dienstleistung']])
 
-    print('KundenDaten von allen Kunden: ',kundenDaten)
+    #print('KundenDaten von allen Kunden: ',kundenDaten)
+    return kundenDaten
 
 def databaseAddData(connection, name, nachname, strasse, plzUndOrt, dienstleistung):
     cursor = connection.cursor()
@@ -58,8 +62,6 @@ def databaseAddData(connection, name, nachname, strasse, plzUndOrt, dienstleistu
         print(f"Fehler beim Einfügen der Daten: {e}")
         connection.rollback()  # Bei einem Fehler zurückrollen
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}})  # Erlaube nur Anfragen von Angular
 
 @app.route('/', methods=['POST'])
 def receive_daten():
@@ -99,6 +101,12 @@ def receive_daten():
         print(f"Fehler aufgetreten: {e}")  # Ausgabe des Fehlers in die Konsole
         return jsonify({"message": "Fehler beim Empfangen der Daten!", "error": str(e)}), 500
     
+@app.route('/kundenData', methods=["GET"])
+@cross_origin(origin='http://localhost:4200')  # Nur Anfragen von localhost:4200 erlauben
+def sendDaten():
+    conn=create_connection()
+    kundendaten=fetch_data(conn)
+    return jsonify(kundendaten)
     
 if __name__ == '__main__':
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { DatenService } from '../services/api-data.service';
 import { FormsModule } from '@angular/forms';
+import { GetKundenDatenService } from '../services/get-kunden-daten.service';
 
 @Component({
   selector: 'app-billreader',
@@ -10,19 +10,25 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './billreader.component.css'
 })
 export class BillreaderComponent {
-  textInput:string = ''; // Beispiel für die zu sendenden Daten
+  kundenDaten:any;
 
-  constructor(private datenService: DatenService) {}
-
-  sendText(): void {
-    const textData = { text: this.textInput };  // Verpacken des Textes als JSON-Objekt
-    this.datenService.sendDaten(textData).subscribe(
-      response => {
-        console.log('Antwort von der API:', response);
+  constructor(private datenService: GetKundenDatenService) {
+    // this.loadKundenDaten() 
+  }
+  ngOnInit(){
+    this.loadKundenDaten();
+  }
+  
+  loadKundenDaten() {
+    this.datenService.getData().subscribe(
+      (data) => {
+        this.kundenDaten = data;  // Abonniere und speichere die Daten
+        console.log(data);        // Optional: Daten in der Konsole anzeigen
       },
-      error => {
-        console.error('Fehler beim Senden der Daten', error);
+      (error) => {
+        console.error('Fehler beim Abrufen der Kundendaten', error);  // Fehlerbehandlung
       }
     );
+
   }
 }

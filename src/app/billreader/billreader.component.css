@@ -27,3 +27,50 @@ body {
 p{
     text-align: center;
 }
+
+
+/* Grundstil für die ungeordnete Liste */
+ul {
+    list-style-type: none; /* Entfernt die Standard-Aufzählungszeichen */
+    padding: 0; /* Entfernt die Standard-Padding */
+    margin: 0; /* Entfernt die Standard-Margin */
+    max-width: 600px; /* Maximale Breite der Liste */
+    background-color: #e9e2fa; /* Hintergrundfarbe der Liste */
+    border-radius: 8px; /* Abgerundete Ecken */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Leichter Schatten für Tiefe */
+}
+
+/* Stil für die Listenelemente */
+li {
+    padding: 15px 20px; /* Innenabstand für die Listenelemente */
+    border-bottom: 1px solid #ddd; /* Trennlinie zwischen den Listenelementen */
+    color:black;
+    transition: background-color 0.3s; /* Sanfte Übergänge für den Hover-Effekt */
+    border-radius: 8px;
+}
+
+/* Letztes Listenelement hat keine untere Grenze */
+li:last-child {
+    border-bottom: none; /* Entfernt die untere Grenze des letzten Elements */
+}
+
+/* Hover-Effekt für die Listenelemente */
+li:hover {
+    background-color: #220070; /* Hellerer Hintergrund beim Hover */
+    color:white;
+    cursor: pointer; /* Zeigt, dass das Element interaktiv ist */
+    border-radius: 8px;
+}
+
+/* Stil für die Textinhalte in der Liste */
+li h3 {
+    margin: 0; /* Entfernt die Standard-Margin für Überschriften */
+    font-size: 1.2em; /* Größere Schriftgröße für Überschriften */
+    color: #333; /* Dunkle Schriftfarbe für gute Lesbarkeit */
+}
+
+li p {
+    margin: 5px 0 0; /* Oberer Abstand für den Text */
+    color: #666; /* Hellere Farbe für den normalen Text */
+    font-size: 0.9em; /* Kleinere Schriftgröße für den Text */
+}
