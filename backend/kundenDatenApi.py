@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 import mysql.connector
 from mysql.connector import Error
 
-originLink='http://localhost:4200'
+originLink="http://localhost:4200"
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": originLink}})  # Erlaube nur Anfragen von Angular
@@ -127,8 +127,10 @@ def deleteDaten():
         data = request.get_json()  # Empfange die JSON-Daten
         if not data:
             return jsonify({"message": "Keine Daten empfangen!"}), 400
-        databaseDeleteData(conn,data)
+        kundennummer=data.get('kundennummer',)
+        databaseDeleteData(conn,kundennummer)
         conn.close()
+        return jsonify({"deleted: ": kundennummer})
     except Exception as e:
         print(f"Fehler aufgetreten: {e}")  # Ausgabe des Fehlers in die Konsole
         return jsonify({"message": "Fehler beim Loeschen der Daten!", "error": str(e)}), 500

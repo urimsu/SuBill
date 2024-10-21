@@ -45,6 +45,7 @@ export class BillreaderComponent {
         console.error('Fehler beim Senden der Loesch Daten', error);
       }
       )
+      window.location.reload();
     //window.location.reload();
 
 
