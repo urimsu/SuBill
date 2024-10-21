@@ -191,7 +191,8 @@ export class CalculatorComponent {
 
     doc.save('rechnung.pdf');
     
-    const toSendData = {firma:this.firma,
+    const toSendData = {
+      firma:this.firma,
       vorname:this.vorname,
       nachname: this.nachname,
       strasse: this.strasse,

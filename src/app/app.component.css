@@ -1,4 +1,8 @@
 /* Container für zentrierte Buttons */
+body{
+  min-width: 400px;
+}
+
 .button-container {
     display: flex;
     justify-content: center;  /* Zentriert die Buttons horizontal */

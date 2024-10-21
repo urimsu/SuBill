@@ -1,12 +1,30 @@
 <div class="billReader">
      <div class="form-container">
-
         <h1>Kundendaten:</h1>
-        <ul>
-          @for(kunde of kundenDaten;track kunde){
-            <li>{{ kunde }}</li>
-        }
-        </ul>
+        <table>
+          <thead>
+              <tr>
+                  <th>Firma</th>
+                  <th>Name</th>
+                  <th>Nachname</th>
+                  <th>Straße</th>
+                  <th>PLZ und Ort</th>
+                  <th>Rechnungsgrund</th>
+              </tr>
+          </thead>
+          <tbody>
+            @for(kunde of kundenDaten;track kunde){
+              <tr (click)="handleClick(kunde)">
+                  <td >{{kunde[0]}}</td>
+                  <td>{{kunde[1]}}</td>
+                  <td>{{kunde[2]}}</td>
+                  <td>{{kunde[3]}}</td>
+                  <td>{{kunde[4]}}</td>
+                  <td>{{kunde[5]}}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
      </div>
 </div>
 

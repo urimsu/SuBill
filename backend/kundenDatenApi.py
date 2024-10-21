@@ -3,8 +3,10 @@ from flask_cors import CORS, cross_origin
 import mysql.connector
 from mysql.connector import Error
 
+originLink='http://localhost:4200'
+
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}})  # Erlaube nur Anfragen von Angular
+CORS(app, resources={r"/*": {"origins": originLink}})  # Erlaube nur Anfragen von Angular
 
 def listInString(liste):
     finalString=''
@@ -42,25 +44,39 @@ def fetch_data(connection):
 
     for row in rows:
         row_dict = dict(zip(columns, row))
-        kundenDaten.append([row_dict['Kundennummer'],row_dict['Nachname'],row_dict['Name'],row_dict['Straße'],row_dict['Plz und Wohnort'], row_dict['Dienstleistung']])
+        kundenDaten.append([row_dict['Kundennummer'],row_dict['Firma'],row_dict['Nachname'],row_dict['Name'],row_dict['Straße'],row_dict['Plz und Wohnort'], row_dict['Dienstleistung']])
 
     #print('KundenDaten von allen Kunden: ',kundenDaten)
     return kundenDaten
 
-def databaseAddData(connection, name, nachname, strasse, plzUndOrt, dienstleistung):
+def databaseAddData(connection, firma,name, nachname, strasse, plzUndOrt, dienstleistung):
     cursor = connection.cursor()
     
     insert_query = """
-    INSERT INTO `Kunden-Tabelle` (`Kundennummer`, `Name`, `Nachname`, `Straße`, `Plz und Wohnort`, `Dienstleistung`) 
-    VALUES (NULL, %s, %s, %s, %s, %s);
+    INSERT INTO `Kunden-Tabelle` (`Kundennummer`,`Firma`,`Name`, `Nachname`, `Straße`, `Plz und Wohnort`, `Dienstleistung`) 
+    VALUES (NULL, %s, %s, %s, %s, %s, %s);
     """
     
     try:
-        cursor.execute(insert_query, (name, nachname, strasse, plzUndOrt, dienstleistung))
+        cursor.execute(insert_query, (firma, name, nachname, strasse, plzUndOrt, dienstleistung))
         connection.commit()  # Vergiss nicht, die Änderungen zu speichern
     except Exception as e:
         print(f"Fehler beim Einfügen der Daten: {e}")
         connection.rollback()  # Bei einem Fehler zurückrollen
+
+def databaseDeleteData(connection,kundennummer):
+    cursor = connection.cursor()
+    
+    delete_query = """DELETE FROM `Kunden-Tabelle` WHERE `Kundennummer` = %s"""    
+    try:
+        cursor.execute(delete_query, (kundennummer,))
+        connection.commit()  # Vergiss nicht, die Änderungen zu speichern
+        return jsonify({"message": "Daten erfolgreich gelöscht!"}), 200
+    except Exception as e:
+        print(f"Fehler beim loeschen der Daten: {e}")
+        connection.rollback()  # Bei einem Fehler zurückrollen
+    finally:
+        cursor.close()
 
 
 @app.route('/', methods=['POST'])
@@ -84,7 +100,7 @@ def receive_daten():
         # Beispielaufruf
         if conn:
             fetch_data(conn)
-        databaseAddData(conn, vorname, nachname, strasse, plzUndOrt, listInString(rechnungsgrund))
+        databaseAddData(conn,firma ,vorname, nachname, strasse, plzUndOrt, listInString(rechnungsgrund))
         conn.close()
 
         return jsonify({
@@ -101,13 +117,30 @@ def receive_daten():
         print(f"Fehler aufgetreten: {e}")  # Ausgabe des Fehlers in die Konsole
         return jsonify({"message": "Fehler beim Empfangen der Daten!", "error": str(e)}), 500
     
+    
+
+@app.route('/deleteData', methods=["POST"])
+@cross_origin(origin=originLink)
+def deleteDaten():
+    conn=create_connection()
+    try:
+        data = request.get_json()  # Empfange die JSON-Daten
+        if not data:
+            return jsonify({"message": "Keine Daten empfangen!"}), 400
+        databaseDeleteData(conn,data)
+        conn.close()
+    except Exception as e:
+        print(f"Fehler aufgetreten: {e}")  # Ausgabe des Fehlers in die Konsole
+        return jsonify({"message": "Fehler beim Loeschen der Daten!", "error": str(e)}), 500
+        
+
 @app.route('/kundenData', methods=["GET"])
-@cross_origin(origin='http://localhost:4200')  # Nur Anfragen von localhost:4200 erlauben
+@cross_origin(origin=originLink)  # Nur Anfragen von localhost:4200 erlauben
 def sendDaten():
     conn=create_connection()
     kundendaten=fetch_data(conn)
     return jsonify(kundendaten)
-    
-if __name__ == '__main__':
 
+
+if __name__ == '__main__':
     app.run(debug=True)
