@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DatenService {
-  private apiUrl = 'http://127.0.0.1:5000/'; // Die URL deiner API
+  private apiUrl = 'https://subill-backend.onrender.com'; // Die URL deiner API
 
   constructor(private http: HttpClient) {}
 
